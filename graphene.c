@@ -13,9 +13,7 @@ struct termios t_chan, t_orig;
 
 float transform(float x) // Return Y for X
 {	
-	float a = M_PI / 180 * x;
-
-	return 50 * tanf(a);
+	return 15 * tanf(x);
 }
 
 void enable_raw_mode()
