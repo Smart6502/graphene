@@ -13,7 +13,9 @@ struct termios t_chan, t_orig;
 
 float transform(float x) // Return Y for X
 {
-	return x * sinf(x) * cosf(x);
+	float a = M_PI / 180 * x;
+	
+	return x * sinf(a) * cosf(a);
 }
 
 void enable_raw_mode()
@@ -60,6 +62,8 @@ void step()
 		{
 			case 'w':
 				hah += warp;
+				mdo_w += warp;
+				mup_w -= warp;
 				rdrw = true;
 				break;
 			case 'a':
@@ -72,6 +76,8 @@ void step()
 				break;
 			case 'd':
 				haw -= warp;
+				mdo_w -= warp;
+				mup_w += warp;
 				rdrw = true;
 				break;
 
