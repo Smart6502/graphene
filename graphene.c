@@ -7,13 +7,15 @@
 
 int haw, hah;
 int mup_w, mdo_w;
-const int warp = 5;
+const int warp = 10;
 bool rdrw = false;
 struct termios t_chan, t_orig;
 
 float transform(float x) // Return Y for X
-{
-	return 50 * cosf(M_PI / 180 * x);
+{	
+	float a = M_PI / 180 * x;
+
+	return 50 * tanf(a);
 }
 
 void enable_raw_mode()
@@ -33,6 +35,12 @@ void cleanup()
 void plot()
 {
 	pluto_clear_buffers();
+
+	for (int y = 0; y < _pluto_canvas.cheight; y++)
+		pluto_set_pix(haw, y);
+
+	for (int x = 0; x < _pluto_canvas.cwidth; x++)
+		pluto_set_pix(x, hah);
 
 	for (int x = mdo_w; x <= mup_w; x++)
 	{
@@ -64,8 +72,8 @@ void step()
 				break;
 			case 'a':
 				haw += warp;
-				mdo_w += warp;
-				mup_w -= warp;
+				mdo_w -= warp;
+				mup_w += warp;
 				rdrw = true;
 				break;
 			case 's':
@@ -74,13 +82,20 @@ void step()
 				break;
 			case 'd':
 				haw -= warp;
-				mdo_w -= warp;
+				mdo_w += warp;
 				mup_w += warp;
 				rdrw = true;
 				break;
 
 			case 'e':
+			case 'q':
 				exit = true;
+				break;
+
+
+			case 'z': // zoom in
+				break;
+			case 'u': // zoom out
 				break;
 
 			default:
@@ -103,6 +118,7 @@ int main()
 	mup_w = haw, mdo_w = -haw;
 	signal(SIGINT, cleanup);
 
+	plot();
 	step();
 
 	cleanup();
