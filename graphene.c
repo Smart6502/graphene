@@ -34,8 +34,9 @@ void plot()
 {
 	pluto_clear_buffers();
 
-	for (int y = 0; y < _pluto_canvas.cheight; y++)
-		pluto_set_pix(haw, y);
+	if (mdo_w <= 0 && mup_w >= 0)
+		for (int y = 0; y < _pluto_canvas.cheight; y++)
+			pluto_set_pix(haw, y);
 
 	for (int x = 0; x < _pluto_canvas.cwidth; x++)
 		pluto_set_pix(x, hah);
@@ -85,7 +86,6 @@ void step()
 				rdrw = true;
 				break;
 
-			case 'e':
 			case 'q':
 				exit = true;
 				break;
