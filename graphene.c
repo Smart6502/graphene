@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include <termios.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 int haw, hah;
 int mup_w, mdo_w;
@@ -28,6 +29,7 @@ void cleanup()
 {
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &t_orig);
 	pluto_deinit();
+	exit(0);
 }
 
 void plot()
